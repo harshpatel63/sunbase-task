@@ -33,18 +33,17 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var data: ImageObjectResponse? = null
-        val recyclerView: RecyclerView = binding.homeRecyclerview
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
-        val adapter = context?.let { HomeAdapter(it) }
-        recyclerView.adapter = adapter
+        val gridView = binding.homeGridView
+        val data = ImageObjectResponse()
+        val adapter = context?.let { HomeAdapter(it, data) }
+        gridView.adapter = adapter
 
 
 
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             it.data?.let {
-                adapter?.updateList(it)
+                adapter?.updateArray(it)
             }
         })
 

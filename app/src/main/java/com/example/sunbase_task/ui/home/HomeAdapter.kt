@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,29 +13,27 @@ import com.example.sunbase_task.R
 import com.example.sunbase_task.network.properties.ImageObject
 import com.example.sunbase_task.network.properties.ImageObjectResponse
 
-class HomeAdapter(private val context: Context): RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-    private val dataSet = ImageObjectResponse()
-    class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.home_item_image)
+class HomeAdapter(private val context: Context, private val dataSet: ImageObjectResponse): BaseAdapter() {
+
+    override fun getCount(): Int = dataSet.size
+
+    override fun getItem(p0: Int): Any {
+        return 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.main_item_view, parent, false)
-        return ViewHolder(view)
+    override fun getItemId(p0: Int): Long {
+        return 0
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            Log.i("afjalsf", "got it")
-            Glide.with(holder.itemView).load(dataSet[position].urls.regular).into(holder.imageView)
-
+    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
+        val imageView: ImageView = ImageView(context)
+        Glide.with(context).load(dataSet.get(p0).urls.regular).into(imageView)
+        return imageView
     }
 
-    override fun getItemCount(): Int = dataSet.size
-
-    fun updateList(newData: ImageObjectResponse) {
+    fun updateArray(array: ImageObjectResponse) {
         dataSet.clear()
-        dataSet.addAll(newData)
+        dataSet.addAll(array)
         notifyDataSetChanged()
     }
 
