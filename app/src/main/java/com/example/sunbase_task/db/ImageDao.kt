@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface ImageDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertImage(image: Image)
 
     @Delete

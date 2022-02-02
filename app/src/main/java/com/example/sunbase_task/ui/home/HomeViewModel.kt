@@ -20,11 +20,8 @@ class HomeViewModel @Inject constructor(
     val text: LiveData<Resource<ImageObjectResponse>>
     get() = _text
 
-    init {
-        getImagesFromNetwork()
-    }
 
-    private fun getImagesFromNetwork() = viewModelScope.launch {
+    fun getImagesFromNetwork() = viewModelScope.launch {
         _text.postValue(Resource.loading(null))
         mainRepository.getImagesFromNetwork().let {
             if(it.isSuccessful)

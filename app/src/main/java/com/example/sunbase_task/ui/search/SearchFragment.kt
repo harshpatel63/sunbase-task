@@ -1,5 +1,7 @@
 package com.example.sunbase_task.ui.search
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.sunbase_task.R
 import com.example.sunbase_task.databinding.FragmentSearchBinding
 import com.example.sunbase_task.network.properties.ImageObjectResponse
 import com.example.sunbase_task.network.properties.Result
@@ -39,9 +42,20 @@ class SearchFragment : Fragment() {
         val data = ArrayList<Result>()
 
         val searchView = binding.searchView
+        val textView = binding.text
         val gridView = binding.searchGridView
         val adapter = context?.let { SearchAdapter(it, data) }
         gridView.adapter = adapter
+
+        val cm = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = cm.getNetworkCapabilities(cm.activeNetwork)
+
+        if(networkInfo == null) {
+            searchView.visibility = View.GONE
+            textView.visibility = View.VISIBLE
+            textView.text = context?.getText(R.string.you_do_not_have_an_active_internet_connection)
+        } else
+            searchView.visibility = View.VISIBLE
 
 
         searchViewModel.text.observe(viewLifecycleOwner, Observer {

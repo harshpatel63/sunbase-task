@@ -1,13 +1,15 @@
 package com.example.sunbase_task.db
 
-import android.graphics.Bitmap
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "image_table")
-data class Image(
-    var imgLink: String? = null
-) {
+public class Image {
+
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Int = 0
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    var bitmapImage: ByteArray? = null
 }

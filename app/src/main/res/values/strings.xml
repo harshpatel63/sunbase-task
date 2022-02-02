@@ -2,4 +2,6 @@
     <string name="app_name">sunbase-task</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
+    <string name="you_do_not_have_an_active_internet_connection">You do not have an active internet connection</string>
+    <string name="start_typing">Start Typing to Search...</string>
 </resources>

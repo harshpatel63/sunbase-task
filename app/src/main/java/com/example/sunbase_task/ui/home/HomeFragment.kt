@@ -1,5 +1,6 @@
 package com.example.sunbase_task.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,12 @@ import com.example.sunbase_task.databinding.FragmentHomeBinding
 import com.example.sunbase_task.network.properties.ImageObject
 import com.example.sunbase_task.network.properties.ImageObjectResponse
 import dagger.hilt.android.AndroidEntryPoint
+import android.net.NetworkInfo
+
+import android.net.ConnectivityManager
+
+
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -38,7 +45,12 @@ class HomeFragment : Fragment() {
         val adapter = context?.let { HomeAdapter(it, data) }
         gridView.adapter = adapter
 
+        val cm = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = cm.getNetworkCapabilities(cm.activeNetwork)
 
+        if(networkInfo != null) {
+            homeViewModel.getImagesFromNetwork()
+        }
 
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
