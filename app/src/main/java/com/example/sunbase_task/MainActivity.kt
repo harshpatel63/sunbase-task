@@ -12,6 +12,10 @@ import com.example.sunbase_task.databinding.ActivityMainBinding
 import com.example.sunbase_task.db.ImageDao
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import android.database.CursorWindow
+import java.lang.Exception
+import java.lang.reflect.Field
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,6 +38,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_notifications
             )
         )
+
+        try {
+            val field: Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.setAccessible(true)
+            field.set(null, 100 * 1024 * 1024) //the 100MB is the new size
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

@@ -9,8 +9,8 @@ interface ImageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertImage(image: Image)
 
-    @Delete
-    suspend fun deleteImage(image: Image)
+    @Query("DELETE FROM IMAGE_TABLE")
+    suspend fun deleteImages()
 
     @Query("SELECT * FROM IMAGE_TABLE")
     fun getAllImages(): LiveData<List<Image>>

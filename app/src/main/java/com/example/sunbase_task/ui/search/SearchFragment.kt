@@ -6,18 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.sunbase_task.R
 import com.example.sunbase_task.databinding.FragmentSearchBinding
-import com.example.sunbase_task.network.properties.ImageObjectResponse
 import com.example.sunbase_task.network.properties.Result
-import com.example.sunbase_task.network.properties.SearchObjectResponse
-import com.example.sunbase_task.ui.home.HomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,7 +53,7 @@ class SearchFragment : Fragment() {
             searchView.visibility = View.VISIBLE
 
 
-        searchViewModel.text.observe(viewLifecycleOwner, Observer {
+        searchViewModel.data.observe(viewLifecycleOwner, Observer {
             it.data?.let {
                 adapter?.updateArray(it.results)
             }

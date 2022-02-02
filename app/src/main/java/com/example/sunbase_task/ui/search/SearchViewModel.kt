@@ -17,20 +17,20 @@ class SearchViewModel @Inject constructor(
     val mainRepository: MainRepository
 ): ViewModel() {
 
-    private val _text = MutableLiveData<Resource<SearchObjectResponse>>()
-    val text: LiveData<Resource<SearchObjectResponse>>
-        get() = _text
+    private val _data = MutableLiveData<Resource<SearchObjectResponse>>()
+    val data: LiveData<Resource<SearchObjectResponse>>
+        get() = _data
 
     fun searchKeyword(keyword: String) {
         searchImageFromNetwork(keyword)
     }
 
     private fun searchImageFromNetwork(keyword: String) = viewModelScope.launch {
-        _text.postValue(Resource.loading(null))
+        _data.postValue(Resource.loading(null))
         mainRepository.searchImageFromNetwork(keyword).let {
             if(it.isSuccessful)
-                _text.postValue(Resource.success(it.body()))
-            else _text.postValue(Resource.error(it.errorBody().toString(), null))
+                _data.postValue(Resource.success(it.body()))
+            else _data.postValue(Resource.error(it.errorBody().toString(), null))
         }
 
     }

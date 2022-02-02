@@ -13,7 +13,7 @@ import com.example.sunbase_task.R
 import com.example.sunbase_task.network.properties.ImageObject
 import com.example.sunbase_task.network.properties.ImageObjectResponse
 
-class HomeAdapter(private val context: Context, private val dataSet: ImageObjectResponse): BaseAdapter() {
+class HomeNetworkAdapter(private val context: Context, private val dataSet: ImageObjectResponse): BaseAdapter() {
 
     override fun getCount(): Int = dataSet.size
 

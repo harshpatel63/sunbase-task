@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
     entities = [Image::class],
     version = 1
 )
-@TypeConverters(Converters::class)
 abstract class ImageDatabase : RoomDatabase() {
 
     abstract fun getImageDao(): ImageDao
