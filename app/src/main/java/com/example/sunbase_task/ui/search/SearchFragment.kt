@@ -52,12 +52,12 @@ class SearchFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query!=null)
-                    searchViewModel.searchKeyword(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText!=null)
+                    searchViewModel.searchKeyword(newText)
                 return false
             }
 
