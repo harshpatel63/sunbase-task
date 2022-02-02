@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
         val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            textView.text = it.data?.get(0)?.urls?.regular ?: ":("
         })
         return root
     }
