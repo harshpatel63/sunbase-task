@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sunbase_task.databinding.FragmentSearchBinding
+import com.example.sunbase_task.network.properties.ImageObjectResponse
+import com.example.sunbase_task.network.properties.Result
+import com.example.sunbase_task.network.properties.SearchObjectResponse
+import com.example.sunbase_task.ui.home.HomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,10 +36,34 @@ class SearchFragment : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSearch
+        val data = ArrayList<Result>()
+
+        val searchView = binding.searchView
+        val gridView = binding.searchGridView
+        val adapter = context?.let { SearchAdapter(it, data) }
+        gridView.adapter = adapter
+
+
         searchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            it.data?.let {
+                adapter?.updateArray(it.results)
+            }
         })
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query!=null)
+                    searchViewModel.searchKeyword(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+
+
         return root
     }
 

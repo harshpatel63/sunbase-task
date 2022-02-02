@@ -16,6 +16,8 @@ class MainRepository @Inject constructor(
 
     suspend fun getImagesFromNetwork() = apiHelper.getImages()
 
+    suspend fun searchImageFromNetwork(keyword:String) = apiHelper.searchImages(keyword)
+
     fun getAllImages() = imageDao.getAllImages()
 
 }
